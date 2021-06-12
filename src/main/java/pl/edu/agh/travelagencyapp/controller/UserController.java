@@ -35,7 +35,7 @@ public class UserController {
     public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long userId)
             throws ResourceNotFoundException {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User with id " + userId + "not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + userId + " not found!"));
         return ResponseEntity.ok().body(user);
     }
 
@@ -48,7 +48,7 @@ public class UserController {
     public ResponseEntity<User> updateUser(@PathVariable(value = "id") Long userId, @Valid @RequestBody User userDetails)
             throws ResourceNotFoundException {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User with id " + userId + "not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + userId + " not found!"));
 
         user.setFirstName(userDetails.getFirstName());
         user.setLastName(userDetails.getLastName());
@@ -61,7 +61,7 @@ public class UserController {
     @DeleteMapping("user/{id}")
     public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User with id " + userId + "not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + userId + " not found!"));
 
         this.userRepository.delete(user);
 

@@ -1,4 +1,4 @@
-package pl.edu.agh.travelagencyapp.repository.exception;
+package pl.edu.agh.travelagencyapp.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

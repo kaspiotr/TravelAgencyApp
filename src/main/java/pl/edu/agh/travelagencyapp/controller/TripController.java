@@ -8,6 +8,7 @@ import pl.edu.agh.travelagencyapp.model.Trip;
 import pl.edu.agh.travelagencyapp.repository.TripRepository;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,10 @@ public class TripController {
 
     @GetMapping("/trips")
     public List<Trip> getAllTrips() {
-        return this.tripRepository.findAll();
+        List<Trip> trips = new ArrayList<>();
+        for(Trip t: this.tripRepository.findAll())
+            trips.add(new Trip(t));
+        return trips;
     }
 
     @GetMapping("/trips/{id}")
@@ -29,12 +33,12 @@ public class TripController {
             throws ResourceNotFoundException {
         Trip trip = tripRepository.findById(tripId)
                 .orElseThrow(() -> new ResourceNotFoundException("Trip with id " + tripId + " not found!"));
-        return ResponseEntity.ok().body(trip);
+        return ResponseEntity.ok().body(new Trip(trip));
     }
 
     @PostMapping("/trips")
     public Trip createTrip(@RequestBody Trip trip) {
-        return this.tripRepository.save(trip);
+        return new Trip(this.tripRepository.save(trip));
     }
 
     @PutMapping("/trips/{id}")
@@ -51,7 +55,7 @@ public class TripController {
         trip.setDescription(tripDetails.getDescription());
         trip.setBasePrice(tripDetails.getBasePrice());
 
-        return ResponseEntity.ok(this.tripRepository.save(trip));
+        return ResponseEntity.ok(new Trip(this.tripRepository.save(trip)));
     }
 
     @DeleteMapping("/trips/{id}")

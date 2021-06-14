@@ -40,6 +40,15 @@ public class User {
         this.reservations = new HashSet<>();
     }
 
+    public User(User user){
+        this.id = user.id;
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+        this.email = user.email;
+        this.role = user.role;
+        this.reservations = new HashSet<>();
+    }
+
     public long getId() {
         return id;
     }

@@ -21,10 +21,10 @@ public class Trip {
     @Column(name = "available_places_no", nullable = false)
     private int availablePlacesNo;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, columnDefinition = "varchar(50)")
     private String name;
 
-    @Column(name = "country", nullable = false)
+    @Column(name = "country", nullable = false, columnDefinition = "varchar(50)")
     private String country;
 
     @Column(name = "description", nullable = false)
@@ -37,7 +37,9 @@ public class Trip {
     @JoinColumn(name = "trip_id")
     private Set<Reservation> reservations;
 
-    public Trip(){}
+    public Trip(){
+        this.reservations = new HashSet<>();
+    }
 
     public Trip(LocalDate startDate, LocalDate endDate, int availablePlacesNo, String name, String country, String description, int basePrice) {
         this.startDate = startDate;

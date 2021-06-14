@@ -39,7 +39,10 @@ public class Reservation {
     @OneToOne(mappedBy = "reservation")
     private Invoice invoice;
 
-    public Reservation(){}
+    public Reservation(){
+        this.participants = new HashSet<>();
+        this.invoice = null;
+    }
 
     public Reservation(LocalDate date, String status, int priceSnapshot, int numberOfParticipants, User user, Trip trip) {
         this.date = date;

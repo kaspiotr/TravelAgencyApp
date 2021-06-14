@@ -12,16 +12,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name", nullable = false, columnDefinition = "varchar(50)")
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name", nullable = false, columnDefinition = "varchar(50)")
     private String lastName;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true, columnDefinition = "varchar(150)")
     private String email;
 
-    @Column(name = "role", nullable = false)
+    @Column(name = "role", nullable = false, columnDefinition = "varchar(1)")
     private String role;
 
     @OneToMany
@@ -29,6 +29,7 @@ public class User {
     private Set<Reservation> reservations;
 
     public User() {
+        this.reservations = new HashSet<>();
     }
 
     public User(String firstName, String lastName, String email, String role) {

@@ -9,12 +9,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.agh.travelagencyapp.exception.ResourceNotFoundException;
 import pl.edu.agh.travelagencyapp.model.Invoice;
+import pl.edu.agh.travelagencyapp.model.Reservation;
 import pl.edu.agh.travelagencyapp.repository.InvoiceRepository;
+import pl.edu.agh.travelagencyapp.repository.ReservationRepository;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,9 +30,16 @@ public class InvoiceController {
     @Autowired
     private InvoiceRepository invoiceRepository;
 
+    @Autowired
+    private ReservationRepository reservationRepository;
+
     @GetMapping("/invoices")
     public List<Invoice> getAllInvoices() {
-        return this.invoiceRepository.findAll();
+        List<Invoice> invoices = new ArrayList<>();
+        for (Invoice invoice : this.invoiceRepository.findAll()) {
+            invoices.add(new Invoice(invoice));
+        }
+        return invoices;
     }
 
     @GetMapping("/invoices/{id}")
@@ -36,12 +47,18 @@ public class InvoiceController {
             throws ResourceNotFoundException {
         Invoice invoice = invoiceRepository.findById(invoiceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Invoice with id " + invoiceId + " not found!"));
-        return ResponseEntity.ok().body(invoice);
+        return ResponseEntity.ok().body(new Invoice(invoice));
     }
 
     @PostMapping("/invoices")
-    public Invoice createInvoice(@RequestBody Invoice invoice) {
-        return this.invoiceRepository.save(invoice);
+    public Invoice createInvoice(@RequestBody Invoice invoice, @RequestParam(value = "reservationId") Long reservationId)
+            throws ResourceNotFoundException {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new ResourceNotFoundException("Reservation with id " + reservationId + " not found!"));
+
+        invoice.setReservation(reservation);
+
+        return new Invoice(this.invoiceRepository.save(invoice));
     }
 
     @PutMapping("/invoices/{id}")

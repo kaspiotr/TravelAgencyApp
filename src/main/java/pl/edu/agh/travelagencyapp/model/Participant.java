@@ -35,11 +35,11 @@ public class Participant {
         this.reservation = null;
     }
 
-    public Participant(String firstName, String lastName, LocalDate birthDate, Reservation reservation) {
+    public Participant(String firstName, String lastName, LocalDate birthDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
-        this.reservation = reservation;
+        this.reservation = null;
     }
 
     public Participant(Participant participant) {

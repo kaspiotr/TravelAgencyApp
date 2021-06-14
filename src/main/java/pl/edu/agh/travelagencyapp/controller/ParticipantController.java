@@ -15,6 +15,7 @@ import pl.edu.agh.travelagencyapp.model.Participant;
 import pl.edu.agh.travelagencyapp.repository.ParticipantRepository;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,11 @@ public class ParticipantController {
 
     @GetMapping("/participants")
     public List<Participant> getAllParticipants() {
-        return this.participantRepository.findAll();
+        List<Participant> participants = new ArrayList<>();
+        for (Participant participant : participantRepository.findAll()) {
+            participants.add(new Participant(participant));
+        }
+        return participants;
     }
 
     @GetMapping("/participants/{id}")
@@ -36,12 +41,12 @@ public class ParticipantController {
             throws ResourceNotFoundException {
         Participant participant = participantRepository.findById(participantId)
                 .orElseThrow(() -> new ResourceNotFoundException("Participant with id " + participantId + " not found!"));
-        return ResponseEntity.ok().body(participant);
+        return ResponseEntity.ok().body(new Participant(participant));
     }
 
     @PostMapping("/participants")
     public Participant createParticipant(@RequestBody Participant participant) {
-        return this.participantRepository.save(participant);
+        return new Participant(this.participantRepository.save(participant));
     }
 
     @PutMapping("/participants/{id}")

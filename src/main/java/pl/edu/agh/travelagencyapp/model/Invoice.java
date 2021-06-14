@@ -33,10 +33,10 @@ public class Invoice {
         this.reservation = null;
     }
 
-    public Invoice(LocalDate date, int totalPrice, Reservation reservation) {
+    public Invoice(LocalDate date, int totalPrice) {
         this.date = date;
         this.totalPrice = totalPrice;
-        this.reservation = reservation;
+        this.reservation = null;
     }
 
     public Invoice(Invoice invoice) {

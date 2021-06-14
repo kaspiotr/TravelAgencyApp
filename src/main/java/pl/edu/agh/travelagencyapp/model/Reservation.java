@@ -39,6 +39,8 @@ public class Reservation {
     @OneToOne(mappedBy = "reservation")
     private Invoice invoice;
 
+    public Reservation(){}
+
     public Reservation(LocalDate date, String status, int priceSnapshot, int numberOfParticipants, User user, Trip trip) {
         this.date = date;
         this.status = status;
@@ -50,7 +52,13 @@ public class Reservation {
         this.invoice = null;
     }
 
-    public Reservation(){}
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public LocalDate getDate() {
         return date;

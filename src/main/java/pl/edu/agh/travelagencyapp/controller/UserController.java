@@ -71,4 +71,15 @@ public class UserController {
         return response;
     }
 
+    @DeleteMapping("users")
+    public Map<String, Boolean> deleteAllUsers() {
+
+        this.userRepository.deleteAll();
+
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("all deleted", Boolean.TRUE);
+
+        return response;
+    }
+
 }

@@ -66,4 +66,16 @@ public class TripController {
 
         return response;
     }
+
+    @DeleteMapping("trips")
+    public Map<String, Boolean> deleteAllTrips() {
+
+        this.tripRepository.deleteAll();
+
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("all deleted", Boolean.TRUE);
+
+        return response;
+    }
+
 }

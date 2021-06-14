@@ -50,6 +50,14 @@ public class Trip {
         this.reservations = new HashSet<>();
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public LocalDate getStartDate() {
         return startDate;
     }

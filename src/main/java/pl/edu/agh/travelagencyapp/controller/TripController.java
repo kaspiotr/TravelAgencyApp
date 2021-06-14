@@ -19,7 +19,7 @@ public class TripController {
     @Autowired
     private TripRepository tripRepository;
 
-    @GetMapping("trips")
+    @GetMapping("/trips")
     public List<Trip> getAllTrips() {
         return this.tripRepository.findAll();
     }
@@ -32,7 +32,7 @@ public class TripController {
         return ResponseEntity.ok().body(trip);
     }
 
-    @PostMapping("trips")
+    @PostMapping("/trips")
     public Trip createTrip(@RequestBody Trip trip) {
         return this.tripRepository.save(trip);
     }
@@ -54,7 +54,7 @@ public class TripController {
         return ResponseEntity.ok(this.tripRepository.save(trip));
     }
 
-    @DeleteMapping("trips/{id}")
+    @DeleteMapping("/trips/{id}")
     public Map<String, Boolean> deleteTrip(@PathVariable(value = "id") Long tripId) throws ResourceNotFoundException {
         Trip trip = tripRepository.findById(tripId)
                 .orElseThrow(() -> new ResourceNotFoundException("Trip with id " + tripId + " not found!"));
@@ -67,7 +67,7 @@ public class TripController {
         return response;
     }
 
-    @DeleteMapping("trips")
+    @DeleteMapping("/trips")
     public Map<String, Boolean> deleteAllTrips() {
 
         this.tripRepository.deleteAll();

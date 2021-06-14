@@ -71,7 +71,7 @@ public class UserController {
         return response;
     }
 
-    @DeleteMapping("users")
+    @DeleteMapping("/users")
     public Map<String, Boolean> deleteAllUsers() {
 
         this.userRepository.deleteAll();

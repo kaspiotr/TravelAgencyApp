@@ -1,11 +1,19 @@
 package pl.edu.agh.travelagencyapp.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "PARTICIPANTS", schema = "public")
 public class Participant {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -23,13 +31,22 @@ public class Participant {
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
-    public Participant(){}
+    public Participant() {
+        this.reservation = null;
+    }
 
-    public Participant(String firstName, String lastName, LocalDate birthDate, Reservation reservation) {
+    public Participant(String firstName, String lastName, LocalDate birthDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
-        this.reservation = reservation;
+        this.reservation = null;
+    }
+
+    public Participant(Participant participant) {
+        this.firstName = participant.firstName;
+        this.lastName = participant.lastName;
+        this.birthDate = participant.birthDate;
+        this.reservation = null;
     }
 
     public long getId() {
@@ -71,4 +88,5 @@ public class Participant {
     public void setReservation(Reservation reservation) {
         this.reservation = reservation;
     }
+
 }

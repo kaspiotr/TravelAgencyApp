@@ -1,0 +1,84 @@
+package pl.edu.agh.travelagencyapp.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import pl.edu.agh.travelagencyapp.exception.ResourceNotFoundException;
+import pl.edu.agh.travelagencyapp.model.Invoice;
+import pl.edu.agh.travelagencyapp.repository.InvoiceRepository;
+
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/v1")
+public class InvoiceController {
+
+    @Autowired
+    private InvoiceRepository invoiceRepository;
+
+    @GetMapping("/invoices")
+    public List<Invoice> getAllInvoices() {
+        return this.invoiceRepository.findAll();
+    }
+
+    @GetMapping("/invoices/{id}")
+    public ResponseEntity<Invoice> getInvoiceById(@PathVariable(value = "id") Long invoiceId)
+            throws ResourceNotFoundException {
+        Invoice invoice = invoiceRepository.findById(invoiceId)
+                .orElseThrow(() -> new ResourceNotFoundException("Invoice with id " + invoiceId + " not found!"));
+        return ResponseEntity.ok().body(invoice);
+    }
+
+    @PostMapping("/invoices")
+    public Invoice createInvoice(@RequestBody Invoice invoice) {
+        return this.invoiceRepository.save(invoice);
+    }
+
+    @PutMapping("/invoices/{id}")
+    public ResponseEntity<Invoice> updateInvoice(@PathVariable(value = "id") Long invoiceId, @Valid @RequestBody Invoice invoiceDetails)
+            throws ResourceNotFoundException {
+        Invoice invoice = invoiceRepository.findById(invoiceId)
+                .orElseThrow(() -> new ResourceNotFoundException("Invoice with id " + invoiceId + " not found!"));
+
+        invoice.setDate(invoiceDetails.getDate());
+        invoice.setTotalPrice(invoiceDetails.getTotalPrice());
+
+        return ResponseEntity.ok(new Invoice(this.invoiceRepository.save(invoice)));
+    }
+
+    @DeleteMapping("/invoices/{id}")
+    public Map<String, Boolean> deleteInvoice(@PathVariable(value = "id") Long invoiceId)
+            throws ResourceNotFoundException {
+        Invoice invoice = invoiceRepository.findById(invoiceId)
+                .orElseThrow(() -> new ResourceNotFoundException("Invoice with id " + invoiceId + " not found!"));
+
+        this.invoiceRepository.delete(invoice);
+
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+
+        return response;
+    }
+
+    @DeleteMapping("/invoices")
+    public Map<String, Boolean> deleteAllInvoices() {
+
+        this.invoiceRepository.deleteAll();
+
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("all deleted", Boolean.TRUE);
+
+        return response;
+    }
+
+}

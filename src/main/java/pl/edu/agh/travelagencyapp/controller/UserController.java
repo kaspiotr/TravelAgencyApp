@@ -15,6 +15,7 @@ import pl.edu.agh.travelagencyapp.model.User;
 import pl.edu.agh.travelagencyapp.repository.UserRepository;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,10 @@ public class UserController {
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
-        return this.userRepository.findAll();
+        List<User> users = new ArrayList<>();
+        for(User u: this.userRepository.findAll())
+            users.add(new User(u));
+        return users;
     }
 
     @GetMapping("/users/{id}")
@@ -36,12 +40,12 @@ public class UserController {
             throws ResourceNotFoundException {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User with id " + userId + " not found!"));
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body(new User(user));
     }
 
     @PostMapping("/users")
     public User createUser(@RequestBody User user) {
-        return this.userRepository.save(user);
+        return new User(this.userRepository.save(user));
     }
 
     @PutMapping("/users/{id}")
@@ -55,7 +59,7 @@ public class UserController {
         user.setEmail(userDetails.getEmail());
         user.setRole(userDetails.getRole());
 
-        return ResponseEntity.ok(this.userRepository.save(user));
+        return ResponseEntity.ok(new User(this.userRepository.save(user)));
     }
 
     @DeleteMapping("/users/{id}")

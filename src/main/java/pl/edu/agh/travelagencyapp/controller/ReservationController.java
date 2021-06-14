@@ -12,6 +12,7 @@ import pl.edu.agh.travelagencyapp.repository.TripRepository;
 import pl.edu.agh.travelagencyapp.repository.UserRepository;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,12 +32,9 @@ public class ReservationController {
 
     @GetMapping("/reservations")
     public List<Reservation> getAllReservations() {
-        List<Reservation> reservations = reservationRepository.findAll();
-        for(Reservation reservation: reservations){
-            reservation.setUser(null);
-            reservation.setTrip(null);
-            reservation.setInvoice(null);
-        }
+        List<Reservation> reservations = new ArrayList<>();
+        for(Reservation res: this.reservationRepository.findAll())
+            reservations.add(new Reservation(res));
         return reservations;
     }
 
@@ -46,7 +44,7 @@ public class ReservationController {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Reservation with id " + reservationId + " not found!"));
 
-        return ResponseEntity.ok().body(reservation);
+        return ResponseEntity.ok().body(new Reservation(reservation));
     }
 
     @PostMapping("/reservations")
@@ -59,7 +57,7 @@ public class ReservationController {
 
         reservation.setUser(user);
         reservation.setTrip(trip);
-        return this.reservationRepository.save(reservation);
+        return new Reservation(this.reservationRepository.save(reservation));
     }
 
     @PutMapping("/reservations/{id}")
@@ -73,7 +71,7 @@ public class ReservationController {
         reservation.setPriceSnapshot(reservationDetails.getPriceSnapshot());
         reservation.setNumberOfParticipants(reservationDetails.getNumberOfParticipants());
 
-        return ResponseEntity.ok(this.reservationRepository.save(reservation));
+        return ResponseEntity.ok(new Reservation(this.reservationRepository.save(reservation)));
     }
 
     @DeleteMapping("/reservations/{id}")
@@ -99,4 +97,5 @@ public class ReservationController {
 
         return response;
     }
+
 }

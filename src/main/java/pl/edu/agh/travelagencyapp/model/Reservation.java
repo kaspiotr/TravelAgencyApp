@@ -42,6 +42,8 @@ public class Reservation {
     public Reservation(){
         this.participants = new HashSet<>();
         this.invoice = null;
+        this.user = null;
+        this.trip = null;
     }
 
     public Reservation(LocalDate date, String status, int priceSnapshot, int numberOfParticipants, User user, Trip trip) {
@@ -52,6 +54,18 @@ public class Reservation {
         this.user = user;
         this.trip = trip;
         this.participants = new HashSet<>();
+        this.invoice = null;
+    }
+
+    public Reservation(Reservation reservation){
+        this.id = reservation.id;
+        this.date = reservation.date;
+        this.status = reservation.status;
+        this.priceSnapshot = reservation.priceSnapshot;
+        this.numberOfParticipants = reservation.numberOfParticipants;
+        this.participants = new HashSet<>();
+        this.user = null;
+        this.trip = null;
         this.invoice = null;
     }
 

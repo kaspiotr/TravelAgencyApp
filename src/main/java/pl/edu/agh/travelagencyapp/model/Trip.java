@@ -52,6 +52,18 @@ public class Trip {
         this.reservations = new HashSet<>();
     }
 
+    public Trip(Trip trip){
+        this.id = trip.id;
+        this.startDate = trip.startDate;
+        this.endDate = trip.endDate;
+        this.availablePlacesNo = trip.availablePlacesNo;
+        this.name = trip.name;
+        this.country = trip.country;
+        this.description = trip.description;
+        this.basePrice = trip.basePrice;
+        this.reservations = new HashSet<>();
+    }
+
     public long getId() {
         return id;
     }

@@ -26,7 +26,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("users")
+    @GetMapping("/users")
     public List<User> getAllUsers() {
         return this.userRepository.findAll();
     }
@@ -39,7 +39,7 @@ public class UserController {
         return ResponseEntity.ok().body(user);
     }
 
-    @PostMapping("users")
+    @PostMapping("/users")
     public User createUser(@RequestBody User user) {
         return this.userRepository.save(user);
     }
@@ -58,7 +58,7 @@ public class UserController {
         return ResponseEntity.ok(this.userRepository.save(user));
     }
 
-    @DeleteMapping("users/{id}")
+    @DeleteMapping("/users/{id}")
     public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User with id " + userId + " not found!"));

@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.agh.travelagencyapp.exception.ResourceNotFoundException;
 import pl.edu.agh.travelagencyapp.model.Participant;
+import pl.edu.agh.travelagencyapp.model.Reservation;
 import pl.edu.agh.travelagencyapp.repository.ParticipantRepository;
+import pl.edu.agh.travelagencyapp.repository.ReservationRepository;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -26,6 +29,9 @@ public class ParticipantController {
 
     @Autowired
     private ParticipantRepository participantRepository;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
 
     @GetMapping("/participants")
     public List<Participant> getAllParticipants() {
@@ -45,7 +51,13 @@ public class ParticipantController {
     }
 
     @PostMapping("/participants")
-    public Participant createParticipant(@RequestBody Participant participant) {
+    public Participant createParticipant(@RequestBody Participant participant, @RequestParam(value = "reservationId") Long reservationId)
+            throws ResourceNotFoundException {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new ResourceNotFoundException("Reservation with id " + reservationId + " not found!"));
+
+        participant.setReservation(reservation);
+
         return new Participant(this.participantRepository.save(participant));
     }
 

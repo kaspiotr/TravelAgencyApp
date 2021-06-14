@@ -55,6 +55,14 @@ public class Reservation {
         this.invoice = null;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public LocalDate getDate() {
         return date;
     }

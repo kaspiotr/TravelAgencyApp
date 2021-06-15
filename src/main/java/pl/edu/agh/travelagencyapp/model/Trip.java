@@ -67,8 +67,10 @@ public class Trip {
 
     public int countAvailablePlaces(){
         int reservedPlacesNo = 0;
-        for(Reservation reservation: reservations)
-            reservedPlacesNo += reservation.getNumberOfParticipants();
+        for(Reservation reservation: reservations){
+            if(!reservation.getStatus().equals("C"))
+                reservedPlacesNo += reservation.getNumberOfParticipants();
+        }
         return availablePlacesNo - reservedPlacesNo;
     }
 

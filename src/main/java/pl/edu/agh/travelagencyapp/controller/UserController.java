@@ -2,14 +2,8 @@ package pl.edu.agh.travelagencyapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pl.edu.agh.travelagencyapp.exception.InvalidUserException;
 import pl.edu.agh.travelagencyapp.exception.ResourceNotFoundException;
 import pl.edu.agh.travelagencyapp.model.User;
 import pl.edu.agh.travelagencyapp.repository.UserRepository;
@@ -35,6 +29,20 @@ public class UserController {
         return users;
     }
 
+    @GetMapping("/users/search")
+    public List<User> getFilteredUsers(@RequestParam(value = "firstName", required = false) String firstName,
+                                       @RequestParam(value = "lastName", required = false) String lastName) {
+        List<User> users = new ArrayList<>();
+        for(User u: this.userRepository.findAll()){
+            if((firstName == null || u.getFirstName().contains(firstName)) &&
+                    (lastName == null || u.getLastName().contains(lastName))
+            ){
+                users.add(new User(u));
+            }
+        }
+        return users;
+    }
+
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long userId)
             throws ResourceNotFoundException {
@@ -50,9 +58,12 @@ public class UserController {
 
     @PutMapping("/users/{id}")
     public ResponseEntity<User> updateUser(@PathVariable(value = "id") Long userId, @Valid @RequestBody User userDetails)
-            throws ResourceNotFoundException {
+            throws ResourceNotFoundException, InvalidUserException {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User with id " + userId + " not found!"));
+
+        if(!"A".equals(userDetails.getRole()) && !"R".equals(userDetails.getRole()))
+            throw new InvalidUserException("Cannot change user role to different than Admin or Regular");
 
         user.setFirstName(userDetails.getFirstName());
         user.setLastName(userDetails.getLastName());

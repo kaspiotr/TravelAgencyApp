@@ -53,12 +53,12 @@ public class ReservationController {
 
     @GetMapping("/reservations/search")
     public List<Reservation> getFilteredReservations(@RequestParam(value = "status") String status) throws InvalidReservationException {
-        if(!status.equals("N") && !status.equals("C") && !status.equals("P"))
+        if(!"N".equals(status) && !"P".equals(status) && !"C".equals(status))
             throw new InvalidReservationException("Invalid status!");
 
         List<Reservation> reservations = new ArrayList<>();
         for(Reservation res: this.reservationRepository.findAll())
-            if(res.getStatus().equals(status))
+            if(status.equals(res.getStatus()))
                 reservations.add(new Reservation(res));
         return reservations;
     }

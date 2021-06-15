@@ -50,6 +50,7 @@ public class InvoiceController {
         return ResponseEntity.ok().body(new Invoice(invoice));
     }
 
+    //HIDDEN
     @PostMapping("/invoices")
     public Invoice createInvoice(@RequestBody Invoice invoice, @RequestParam(value = "reservationId") Long reservationId)
             throws ResourceNotFoundException {
@@ -61,6 +62,7 @@ public class InvoiceController {
         return new Invoice(this.invoiceRepository.save(invoice));
     }
 
+    //HIDDEN
     @PutMapping("/invoices/{id}")
     public ResponseEntity<Invoice> updateInvoice(@PathVariable(value = "id") Long invoiceId, @Valid @RequestBody Invoice invoiceDetails)
             throws ResourceNotFoundException {
@@ -73,6 +75,7 @@ public class InvoiceController {
         return ResponseEntity.ok(new Invoice(this.invoiceRepository.save(invoice)));
     }
 
+    //HIDDEN
     @DeleteMapping("/invoices/{id}")
     public Map<String, Boolean> deleteInvoice(@PathVariable(value = "id") Long invoiceId)
             throws ResourceNotFoundException {
@@ -87,6 +90,7 @@ public class InvoiceController {
         return response;
     }
 
+    //HIDDEN
     @DeleteMapping("/invoices")
     public Map<String, Boolean> deleteAllInvoices() {
 

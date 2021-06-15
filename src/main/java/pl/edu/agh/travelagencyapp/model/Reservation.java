@@ -1,15 +1,6 @@
 package pl.edu.agh.travelagencyapp.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,7 +25,7 @@ public class Reservation {
     @Column(name = "number_of_participants", nullable = false)
     private int numberOfParticipants;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "reservation_id")
     private Set<Participant> participants;
 
@@ -46,7 +37,7 @@ public class Reservation {
     @JoinColumn(name = "trip_id")
     private Trip trip;
 
-    @OneToOne(mappedBy = "reservation")
+    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
     private Invoice invoice;
 
     public Reservation(){
@@ -77,6 +68,10 @@ public class Reservation {
         this.user = null;
         this.trip = null;
         this.invoice = null;
+    }
+
+    public int countTotalPrice(){
+        return numberOfParticipants * priceSnapshot;
     }
 
     public long getId() {

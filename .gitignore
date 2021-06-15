@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### For combined repo ###
+/TravelAgencyApp-DataGenerator/node_modules
+/TravelAgencyApp-DataGenerator/.idea

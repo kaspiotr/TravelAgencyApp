@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.travelagencyapp.exception.InvalidUserException;
 import pl.edu.agh.travelagencyapp.exception.ResourceNotFoundException;
+import pl.edu.agh.travelagencyapp.model.Reservation;
 import pl.edu.agh.travelagencyapp.model.User;
 import pl.edu.agh.travelagencyapp.repository.UserRepository;
 
@@ -49,6 +50,18 @@ public class UserController {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User with id " + userId + " not found!"));
         return ResponseEntity.ok().body(new User(user));
+    }
+
+    @GetMapping("/users/{id}/reservations")
+    public List<Reservation> getUserReservations(@PathVariable(value = "id") Long userId)
+            throws ResourceNotFoundException {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + userId + " not found!"));
+
+        List<Reservation> reservations = new ArrayList<>();
+        for (Reservation r: user.getReservations())
+            reservations.add(new Reservation(r));
+        return reservations;
     }
 
     @PostMapping("/users")

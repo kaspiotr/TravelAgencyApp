@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.travelagencyapp.exception.InvalidTripException;
 import pl.edu.agh.travelagencyapp.exception.ResourceNotFoundException;
+import pl.edu.agh.travelagencyapp.model.ExtendedTrip;
 import pl.edu.agh.travelagencyapp.model.Reservation;
 import pl.edu.agh.travelagencyapp.model.Trip;
 import pl.edu.agh.travelagencyapp.repository.TripRepository;
@@ -76,6 +77,23 @@ public class TripController {
         for (Reservation r: trip.getReservations())
             reservations.add(new Reservation(r));
         return reservations;
+    }
+
+    @GetMapping("/trips/withPlaces")
+    public List<ExtendedTrip> getAllExtendedTrips() {
+        List<ExtendedTrip> trips = new ArrayList<>();
+        for(Trip t: this.tripRepository.findAll()){
+            trips.add(new ExtendedTrip(t));
+        }
+        return trips;
+    }
+
+    @GetMapping("/trips/withPlaces/{id}")
+    public ResponseEntity<ExtendedTrip> getExtendedTripById(@PathVariable(value = "id") Long tripId)
+            throws ResourceNotFoundException {
+        Trip trip = tripRepository.findById(tripId)
+                .orElseThrow(() -> new ResourceNotFoundException("Trip with id " + tripId + " not found!"));
+        return ResponseEntity.ok().body(new ExtendedTrip(trip));
     }
 
     @PostMapping("/trips")

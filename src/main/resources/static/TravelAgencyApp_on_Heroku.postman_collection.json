@@ -1,0 +1,632 @@
+{
+	"info": {
+		"_postman_id": "33e149b5-234a-4b02-a124-1b1c45d29b78",
+		"name": "TravelAgencyApp on Heroku",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create 1st user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Jan\",\r\n    \"lastName\": \"Kowalski\",\r\n    \"email\": \"jan.kowalski@gmail.com\",\r\n    \"role\": \"R\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/api/v1/users",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create 2nd user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Janusz\",\r\n    \"lastName\": \"Tracz\",\r\n    \"email\": \"janusz.tracz@gmail.com\",\r\n    \"role\": \"R\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/api/v1/users",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create 3rd user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Bil\",\r\n    \"lastName\": \"Gates\",\r\n    \"email\": \"bil.gates@gmail.com\",\r\n    \"role\": \"R\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/api/v1/users",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create 4th user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Elon\",\r\n    \"lastName\": \"Musk\",\r\n    \"email\": \"elon.musk@gmail.com\",\r\n    \"role\": \"R\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/api/v1/users",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create 5th user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Jeff\",\r\n    \"lastName\": \"Bezos\",\r\n    \"email\": \"jeff.bezos@gmail.com\",\r\n    \"role\": \"R\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/api/v1/users",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user with id 1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/api/v1/users/1",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user with id 2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/api/v1/users/2",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user with id 56 - should return NOT FOUND ERROR",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/api/v1/users/56",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"56"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/api/v1/users",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user with id 240",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"firstName\": \"Zdzisław\",\r\n        \"lastName\": \"Rubio\",\r\n        \"email\": \"esmai.rubio@rediffmail.com\",\r\n        \"role\": \"R\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/api/v1/users/2",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/api/v1/users/6",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get swagger docs v2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/v2/api-docs",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"v2",
+						"api-docs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get swagger docs v3",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/v3/api-docs",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"v3",
+						"api-docs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get swagger UI",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/swagger-ui/index.html?url=/v3/api-docs#/",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"swagger-ui",
+						"index.html"
+					],
+					"query": [
+						{
+							"key": "url",
+							"value": "/v3/api-docs"
+						}
+					],
+					"hash": "/"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all reservations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/api/v1/reservations",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"reservations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get filtered reservations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/api/v1/reservations/search?status=P",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"reservations",
+						"search"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "P"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update number of places in reservation",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"firstName\": \"Zdzisław\",\r\n        \"lastName\": \"Rubio\",\r\n        \"email\": \"esmai.rubio@rediffmail.com\",\r\n        \"role\": \"R\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/api/v1/reservations/961/changeNoParticipants?number=1000",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"reservations",
+						"961",
+						"changeNoParticipants"
+					],
+					"query": [
+						{
+							"key": "number",
+							"value": "1000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update reservation status",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"firstName\": \"Zdzisław\",\r\n        \"lastName\": \"Rubio\",\r\n        \"email\": \"esmai.rubio@rediffmail.com\",\r\n        \"role\": \"R\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/api/v1/reservations/961/changeNoParticipants?number=1000",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"reservations",
+						"961",
+						"changeNoParticipants"
+					],
+					"query": [
+						{
+							"key": "number",
+							"value": "1000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get filtered trips no 1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/api/v1/trips/search?dateFrom=01.05.2021&dateTo=31.05.2021&duration=14",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"trips",
+						"search"
+					],
+					"query": [
+						{
+							"key": "dateFrom",
+							"value": "01.05.2021"
+						},
+						{
+							"key": "dateTo",
+							"value": "31.05.2021"
+						},
+						{
+							"key": "duration",
+							"value": "14"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get filtered trips no 2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/api/v1/trips/search?priceFrom=5000&placesFrom=40",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"trips",
+						"search"
+					],
+					"query": [
+						{
+							"key": "priceFrom",
+							"value": "5000"
+						},
+						{
+							"key": "placesFrom",
+							"value": "40"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search for users by first name and last name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://travel-agency-app-heroku.herokuapp.com/api/v1/users/search?firstName=da&lastName=os",
+					"protocol": "https",
+					"host": [
+						"travel-agency-app-heroku",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"search"
+					],
+					"query": [
+						{
+							"key": "firstName",
+							"value": "da"
+						},
+						{
+							"key": "lastName",
+							"value": "os"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

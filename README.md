@@ -12,5 +12,5 @@ This project used to populate a database, hosted on Heroku, with data that are u
 [PDF file with project documentation](https://github.com/kaspiotr/TravelAgencyApp/blob/develop/src/main/resources/static/Dokumentacja_projektu_Bazy_Danych_TravelAgencyApp_JNowobilski_PKasprzyk.pdf)
 
 ## Authors
-Jakub Nowobilski  
-Piotr Kasprzyk
+Jakub Nowobilski (jakubnow@student.agh.edu.pl)  
+Piotr Kasprzyk (pkasprzyk@student.agh.edu.pl)

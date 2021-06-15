@@ -4,11 +4,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-public class InvalidReservationException extends Exception {
+public class InvalidTripException extends Exception {
 
-    private static final long serialVersionUID = 3;
+    private static final long serialVersionUID = 4;
 
-    public InvalidReservationException(String message) {
+    public InvalidTripException(String message) {
         super(message);
     }
 }
+

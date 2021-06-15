@@ -43,6 +43,7 @@ public class Participant {
     }
 
     public Participant(Participant participant) {
+        this.id = participant.id;
         this.firstName = participant.firstName;
         this.lastName = participant.lastName;
         this.birthDate = participant.birthDate;

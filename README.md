@@ -11,6 +11,10 @@ This project used to populate a database, hosted on Heroku, with data that are u
 
 [PDF file with project documentation](https://github.com/kaspiotr/TravelAgencyApp/blob/develop/src/main/resources/static/Dokumentacja_projektu_Bazy_Danych_TravelAgencyApp_JNowobilski_PKasprzyk.pdf)
 
+
+## JSON for POSTMAN
+JSON to import into the POSTMAN in order to tests some of the application features is available [here](https://github.com/kaspiotr/TravelAgencyApp/blob/develop/src/main/resources/static/TravelAgencyApp_on_Heroku.postman_collection.json)
+
 ## Authors
 Jakub Nowobilski (jakubnow@student.agh.edu.pl)  
 Piotr Kasprzyk (pkasprzyk@student.agh.edu.pl)

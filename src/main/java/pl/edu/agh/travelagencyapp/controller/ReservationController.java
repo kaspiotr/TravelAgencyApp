@@ -163,6 +163,9 @@ public class ReservationController {
         if(number < 1)
             throw new InvalidReservationException("Invalid number of participants!");
 
+        if(!reservation.getStatus().equals("N"))
+            throw new InvalidReservationException("Cannot change number of participants. Reservation status is not NEW");
+
         if(number - reservation.getNumberOfParticipants() > reservation.getTrip().countAvailablePlaces())
             throw new InvalidReservationException("Cannot change number of participants. Too few places available!");
 

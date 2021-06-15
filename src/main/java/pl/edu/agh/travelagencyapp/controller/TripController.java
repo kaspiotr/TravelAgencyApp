@@ -47,8 +47,8 @@ public class TripController {
             if((priceFrom == null || priceFrom <= t.getBasePrice()) &&
                     (priceTo == null || priceTo >= t.getBasePrice()) &&
                     (country == null || country.equals(t.getCountry())) &&
-                    (placesFrom == null || placesFrom <= t.getAvailablePlacesNo()) &&
-                    (placesTo == null || placesTo >= t.getAvailablePlacesNo()) &&
+                    (placesFrom == null || placesFrom <= t.countAvailablePlaces()) &&
+                    (placesTo == null || placesTo >= t.countAvailablePlaces()) &&
                     (dateFrom == null || !dateFrom.isAfter(t.getStartDate())) &&
                     (dateTo == null || !dateTo.isBefore(t.getEndDate())) &&
                     (duration == null || t.getStartDate().plusDays(duration).equals(t.getEndDate()))

@@ -1,20 +1,18 @@
 package pl.edu.agh.travelagencyapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pl.edu.agh.travelagencyapp.exception.InvalidTripException;
 import pl.edu.agh.travelagencyapp.exception.ResourceNotFoundException;
+import pl.edu.agh.travelagencyapp.model.ExtendedTrip;
+import pl.edu.agh.travelagencyapp.model.Reservation;
 import pl.edu.agh.travelagencyapp.model.Trip;
 import pl.edu.agh.travelagencyapp.repository.TripRepository;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +33,32 @@ public class TripController {
         return trips;
     }
 
+    @GetMapping("/trips/search")
+    public List<Trip> getFilteredTrips(@RequestParam(value = "country", required = false) String country,
+                                       @RequestParam(value = "priceFrom", required = false) Long priceFrom,
+                                       @RequestParam(value = "priceTo", required = false) Long priceTo,
+                                       @RequestParam(value = "placesFrom", required = false) Long placesFrom,
+                                       @RequestParam(value = "placesTo", required = false) Long placesTo,
+                                       @RequestParam(value = "duration", required = false) Long duration,
+                                       @RequestParam(value = "dateFrom", required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate dateFrom,
+                                       @RequestParam(value = "dateTo", required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate dateTo) {
+        List<Trip> trips = new ArrayList<>();
+        for(Trip t: this.tripRepository.findAll()){
+            if((priceFrom == null || priceFrom <= t.getBasePrice()) &&
+                    (priceTo == null || priceTo >= t.getBasePrice()) &&
+                    (country == null || country.equals(t.getCountry())) &&
+                    (placesFrom == null || placesFrom <= t.getAvailablePlacesNo()) &&
+                    (placesTo == null || placesTo >= t.getAvailablePlacesNo()) &&
+                    (dateFrom == null || !dateFrom.isAfter(t.getStartDate())) &&
+                    (dateTo == null || !dateTo.isBefore(t.getEndDate())) &&
+                    (duration == null || t.getStartDate().plusDays(duration).equals(t.getEndDate()))
+            ){
+                trips.add(new Trip(t));
+            }
+        }
+        return trips;
+    }
+
     @GetMapping("/trips/{id}")
     public ResponseEntity<Trip> getTripById(@PathVariable(value = "id") Long tripId)
             throws ResourceNotFoundException {
@@ -43,11 +67,50 @@ public class TripController {
         return ResponseEntity.ok().body(new Trip(trip));
     }
 
+    @GetMapping("/trips/{id}/reservations")
+    public List<Reservation> getTripReservations(@PathVariable(value = "id") Long tripId)
+            throws ResourceNotFoundException {
+        Trip trip = tripRepository.findById(tripId)
+                .orElseThrow(() -> new ResourceNotFoundException("Trip with id " + tripId + " not found!"));
+
+        List<Reservation> reservations = new ArrayList<>();
+        for (Reservation r: trip.getReservations())
+            reservations.add(new Reservation(r));
+        return reservations;
+    }
+
+    @GetMapping("/trips/withPlaces")
+    public List<ExtendedTrip> getAllExtendedTrips() {
+        List<ExtendedTrip> trips = new ArrayList<>();
+        for(Trip t: this.tripRepository.findAll()){
+            trips.add(new ExtendedTrip(t));
+        }
+        return trips;
+    }
+
+    @GetMapping("/trips/withPlaces/{id}")
+    public ResponseEntity<ExtendedTrip> getExtendedTripById(@PathVariable(value = "id") Long tripId)
+            throws ResourceNotFoundException {
+        Trip trip = tripRepository.findById(tripId)
+                .orElseThrow(() -> new ResourceNotFoundException("Trip with id " + tripId + " not found!"));
+        return ResponseEntity.ok().body(new ExtendedTrip(trip));
+    }
+
     @PostMapping("/trips")
-    public Trip createTrip(@RequestBody Trip trip) {
+    public Trip createTrip(@RequestBody Trip trip) throws InvalidTripException {
+        if(trip.getBasePrice() < 1)
+            throw new InvalidTripException("Cannot create trip. Invalid base price!");
+
+        if(trip.getAvailablePlacesNo() < 1)
+            throw new InvalidTripException("Cannot create trip. Invalid number of available places!");
+
+        if(trip.getStartDate().isAfter(trip.getEndDate()))
+            throw new InvalidTripException("Cannot create trip. Start date cannot be after end date");
+
         return new Trip(this.tripRepository.save(trip));
     }
 
+    //HIDDEN
     @PutMapping("/trips/{id}")
     public ResponseEntity<Trip> updateTrip(@PathVariable(value = "id") Long tripId, @Valid @RequestBody Trip tripDetails)
             throws ResourceNotFoundException {
@@ -65,6 +128,7 @@ public class TripController {
         return ResponseEntity.ok(new Trip(this.tripRepository.save(trip)));
     }
 
+    //HIDDEN
     @DeleteMapping("/trips/{id}")
     public Map<String, Boolean> deleteTrip(@PathVariable(value = "id") Long tripId) throws ResourceNotFoundException {
         Trip trip = tripRepository.findById(tripId)
@@ -78,6 +142,7 @@ public class TripController {
         return response;
     }
 
+    //HIDDEN
     @DeleteMapping("/trips")
     public Map<String, Boolean> deleteAllTrips() {
 

@@ -1,14 +1,14 @@
 package pl.edu.agh.travelagencyapp.exception;
 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-public class InvalidReservationException extends Exception {
+public class InvalidUserException extends Exception{
+    private static final long serialVersionUID = 5;
 
-    private static final long serialVersionUID = 3;
-
-    public InvalidReservationException(String message) {
+    public InvalidUserException(String message) {
         super(message);
     }
 }

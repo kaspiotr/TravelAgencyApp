@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class InvalidParticipantException extends Exception{
 
-    private static final long serialVersionUID = 3;
+    private static final long serialVersionUID = 2;
 
     public InvalidParticipantException(String message) {
         super(message);

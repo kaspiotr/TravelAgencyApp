@@ -51,6 +51,18 @@ public class ReservationController {
         return reservations;
     }
 
+    @GetMapping("/reservations/search")
+    public List<Reservation> getFilteredReservations(@RequestParam(value = "status") String status) throws InvalidReservationException {
+        if(!"N".equals(status) && !"P".equals(status) && !"C".equals(status))
+            throw new InvalidReservationException("Invalid status!");
+
+        List<Reservation> reservations = new ArrayList<>();
+        for(Reservation res: this.reservationRepository.findAll())
+            if(status.equals(res.getStatus()))
+                reservations.add(new Reservation(res));
+        return reservations;
+    }
+
     @GetMapping("/reservations/{id}")
     public ResponseEntity<Reservation> getReservationById(@PathVariable(value = "id") Long reservationId)
             throws ResourceNotFoundException {
@@ -80,6 +92,24 @@ public class ReservationController {
                 .orElseThrow(() -> new ResourceNotFoundException("Reservation with id " + reservationId + " not found!"));
 
         return ResponseEntity.ok().body(new Invoice(reservation.getInvoice()));
+    }
+
+    @GetMapping("/reservations/{id}/user")
+    public ResponseEntity<User> getReservationUser(@PathVariable(value = "id") Long reservationId)
+            throws ResourceNotFoundException {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new ResourceNotFoundException("Reservation with id " + reservationId + " not found!"));
+
+        return ResponseEntity.ok().body(new User(reservation.getUser()));
+    }
+
+    @GetMapping("/reservations/{id}/trip")
+    public ResponseEntity<Trip> getReservationTrip(@PathVariable(value = "id") Long reservationId)
+            throws ResourceNotFoundException {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new ResourceNotFoundException("Reservation with id " + reservationId + " not found!"));
+
+        return ResponseEntity.ok().body(new Trip(reservation.getTrip()));
     }
 
     @PostMapping("/reservations")
